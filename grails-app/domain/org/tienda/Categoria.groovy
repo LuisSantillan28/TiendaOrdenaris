@@ -2,16 +2,20 @@ package org.tienda
 import java.util.UUID
 class Categoria {
 
-    static 
+    static hasMany = [modelos:CategoriaModelo]
+
+    // Categoria categoriaPadre
+    static belongsTo = [categoriaPadre: Categoria] //Llave foranea que se referencía a si misma
+    
 
     String uuid = UUID.randomUUID().toString().replaceAll('\\-','')
     String nombre
     int estatus = 1 //1-activa, 2-inactiva, 3-eliminada
-    //String subcategoriaDe //Llave foranea que se referencía a si misma
     Date registro = new Date()
 
     static constraints = {
-        subcategoria nullable: true, blank: true
+        uuid unique: true
+        categoriaPadre nullable: true, blank: true
     }
 
     static mapping = {

@@ -2,10 +2,13 @@ package org.tienda
 import java.util.UUID
 
 class Comentarios {
+
+    static hasMany=[modelos:Modelo]
+
     String uuid = UUID.randomUUID().toString().replaceAll('\\-','')
     String comentario
     Date fechaReg = new Date()
-    //usuario FK
+    String usuario = 'unknow'
     
 
     static constraints = {

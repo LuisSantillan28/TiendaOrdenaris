@@ -3,7 +3,7 @@ package org.tienda
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class ImagenSpec extends Specification implements DomainUnitTest<Imagen> {
+class DistribuidorSpec extends Specification implements DomainUnitTest<Distribuidor> {
 
     def setup() {
     }
