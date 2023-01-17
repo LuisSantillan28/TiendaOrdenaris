@@ -9,7 +9,7 @@ class Color {
                     ]
 
     String nombre
-    String hexadecimal
+    String hxdecimal
 
     static constraints = {
         uuid unique: true

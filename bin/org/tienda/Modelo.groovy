@@ -11,7 +11,6 @@ class Modelo {
                    ]
 
     Marca marca
-    Comentarios comentario
     Calificacion calificacion
 
     String nombre
@@ -22,9 +21,7 @@ class Modelo {
     static constraints = {
         uuid unique: true
         fechaFin nullable: true, blank: true
-        descripcion nullable: true, blank: true
-        comentario nullable: true, blank: true
-        calificacion nullable: true, blank: true
+        // calificacion nullable: true, blank: true
     }
 
     static mapping = {

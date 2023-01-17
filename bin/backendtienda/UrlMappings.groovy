@@ -5,8 +5,8 @@ class UrlMappings {
     static mappings = {
 
         group "/tienda-ordenaris/api", {
-            group "/sku",
-            "/registrar"()
+            // group "/sku",
+            // "/registrar"()
         }
 
         "/"(controller: 'application', action:'index')
