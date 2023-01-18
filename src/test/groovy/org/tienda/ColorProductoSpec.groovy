@@ -3,7 +3,7 @@ package org.tienda
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class TipoModeloSpec extends Specification implements DomainUnitTest<TipoModelo> {
+class ColorProductoSpec extends Specification implements DomainUnitTest<ColorProducto> {
 
     def setup() {
     }

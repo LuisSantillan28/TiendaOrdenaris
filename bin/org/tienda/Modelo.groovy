@@ -3,15 +3,7 @@ import java.util.UUID
 class Modelo {
     String uuid = UUID.randomUUID().toString().replaceAll('\\-','')
     
-    static hasMany=[
-                    productos:Producto,
-                    categorias:CategoriaModelo,
-                    colores: ColorModelo,
-                    tipo: TipoModelo
-                   ]
-
-    Marca marca
-    Calificacion calificacion
+    static hasMany=[productos:Producto]
 
     String nombre
     int estatus = 1 //1-en stock, 2-proximamente, 3-eliminado
@@ -21,7 +13,6 @@ class Modelo {
     static constraints = {
         uuid unique: true
         fechaFin nullable: true, blank: true
-        // calificacion nullable: true, blank: true
     }
 
     static mapping = {

@@ -16,5 +16,6 @@ class Distribuidor {
 
     static constraints = {
         uuid unique: true
+        direccion unique: true
     }
 }

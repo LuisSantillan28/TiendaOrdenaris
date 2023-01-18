@@ -5,8 +5,7 @@ class Marca {
     String uuid = UUID.randomUUID().toString().replaceAll('\\-','')
 
     static hasMany = [
-                        productos:Producto,
-                        modelos: Modelo
+                        productos:Producto
                     ]
                     
     String nombre

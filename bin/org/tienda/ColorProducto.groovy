@@ -1,17 +1,12 @@
 package org.tienda
 import java.util.UUID
-class TipoModelo {
+class ColorProducto {
     String uuid = UUID.randomUUID().toString().replaceAll('\\-','')
-    Tipo tipos
-    Modelo modelo
+
+    Producto productos
+    Color colores
 
     static constraints = {
         uuid unique: true
-        tipo unique: true
-        modelo unique: true
-    }
-
-    static mapping = {
-        version false
     }
 }

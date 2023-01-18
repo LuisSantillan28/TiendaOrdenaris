@@ -4,8 +4,7 @@ class Color {
     String uuid = UUID.randomUUID().toString().replaceAll('\\-','')
 
     static hasMany =[
-                    productos:Producto,
-                    modelos: ColorModelo
+                    productos:ColorProducto
                     ]
 
     String nombre

@@ -77,8 +77,8 @@ dataSource:
 environments:
     development:
         dataSource:
-            # dbCreate: update
-            dbCreate: create-drop
+            dbCreate: update
+            # dbCreate: create-drop
             username: root
             password: '1234'
             url: jdbc:mysql://localhost:3307/tienda-ordenaris
