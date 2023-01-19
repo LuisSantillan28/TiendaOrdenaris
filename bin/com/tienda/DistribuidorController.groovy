@@ -7,5 +7,9 @@ import grails.converters.*
 class DistribuidorController {
 	static responseFormats = ['json', 'xml']
 	
-    def index() { }
+    def gestionar() {
+        def data = request.JSON
+        
+
+     }
 }

@@ -19,16 +19,16 @@ class UrlMappings {
                 "/listar"(controller: "clacificacion", action: "listaTipo", method:"GET")
             }
             group "/categoria",{
-                "/registrar"(controller: "clacificacion", action:"registrarCategoria", method: "POST")
+                "/registrar"(controller: "clacificacion", action:"gestionarCategoria", method: "POST")
                 "/listar"(controller: "clacificacion", action: "listaCategoria", method:"GET")
             }
             group "/distribuidor",{
-                "/registrar"(controller: "distribuidor", action:"registrar", method:"POST")
-                "/listar"(controller: "distribuidor", action:"registrar", method:"GET")
+                "/registrar"(controller: "distribuidor", action:"gestionar", method:"POST")
+                "/listar"(controller: "distribuidor", action:"lista", method:"GET")
             }
             group "/marca",{
-                "/registrar"(controller: "marca", action:"registrar", method:"POST")
-                "/listar"(controller: "marca", action:"registrar", method:"GET")    
+                "/registrar"(controller: "marca", action:"gestionar", method:"POST")
+                "/listar"(controller: "marca", action:"lista", method:"GET")    
             }
         }
 

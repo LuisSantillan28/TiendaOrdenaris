@@ -40,12 +40,34 @@ class ClacificacionController {
     def gestionarTipo(){
         def data = request.JSON
         if(!data.nombre){
-            render([success: false, mensaje: FuncionesService.getMensajeObligatorio("nombre")])
+            render([success: false, mensaje: FuncionesService.getMensajeObligatorio("nombre")] as JSON)
             return
         }
-        if(data.nombre < 3){
-            render([success: false, mensaje: FuncionesService.getMensajeInvalido("nombre")])
+        if(data.nombre.size() < 3){
+            render([success: false, mensaje: FuncionesService.getMensajeInvalido("nombre")] as JSON)
             return
         }
+        if(!data.descripcion){
+            render([success: false, mensaje: FuncionesService.getMensajeObligatorio("descripcion")] as JSON)
+            return
+        }
+        if(data.descripcion.size() < 10){
+            render([success: false, mensaje: FuncionesService.getMensajeInvalido("descripción")] as JSON)
+            return
+        }
+        render(ClacificacionService.gestionarTipo(data, params.uuid) as JSON)
+    }
+
+    def gestionarCategoria(){
+        def data = request.JSON
+        if(!data.nombre){
+            render([success: false, mensaje: FuncionesService.getMensajeObligatorio("nombre")] as JSON)
+            return
+        }
+        if( data.nombre.size() < 3){
+            render([success: false, mensaje: FuncionesService.getMensajeInvalido("nombre")] as JSON)
+            return
+        }
+        render(ClacificacionService.gestionarCategoria(data, params.uuid) as JSON)
     }
 }

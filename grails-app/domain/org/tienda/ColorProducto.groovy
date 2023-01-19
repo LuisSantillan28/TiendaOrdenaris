@@ -9,4 +9,8 @@ class ColorProducto {
     static constraints = {
         uuid unique: true
     }
+
+    static mapping={
+        version false
+    }
 }

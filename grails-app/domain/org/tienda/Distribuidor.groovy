@@ -18,4 +18,8 @@ class Distribuidor {
         uuid unique: true
         direccion unique: true
     }
+
+    static mapping = {
+        version: false
+    }
 }

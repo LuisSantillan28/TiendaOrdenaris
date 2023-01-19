@@ -9,7 +9,7 @@ class Marca {
                     ]
                     
     String nombre
-    int estatus //1-activa, 2-inactiva, 3-baja
+    int estatus = 1//1-activa, 2-inactiva, 3-baja
     Date fechaIngreso = new Date()
 
     static constraints = {
