@@ -57,6 +57,9 @@ class ProductoController {
     def lista(){
         render(ProductoService.lista() as JSON)
     }
+    def carousel(){
+        render(ProductoService.carousel() as JSON)
+    }
 
     // def gestionar(data){
     //     def data.request.JSON

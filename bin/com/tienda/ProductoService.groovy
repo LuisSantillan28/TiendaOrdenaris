@@ -1,13 +1,13 @@
 package com.tienda
 import org.tienda.Producto
 import org.tienda.Categoria
+import org.tienda.ProductoCategoria
 
 import grails.gorm.transactions.Transactional
 
 
 @Transactional
 class ProductoService {
-def ClacificacionService
 
     def paginar(data){
        try{
@@ -32,6 +32,28 @@ def ClacificacionService
             return[success: false, mensaje: error.getMessage()]
         }
     }
+    def carousel(){
+        try{
+            def lista = []
+            Producto.withCriteria{
+            ne("estatus", 3)
+            maxResults 10
+            order("fechaIngreso","desc")
+            
+        }.each{_producto ->
+            def info = info_producto(_producto)
+            
+            
+            lista.add(info)
+            println lista
+        }
+
+        return[success:true, lista:lista]       
+        }catch(error){
+            println"${new Date()} | Producto Service | Carousel don't works | Error | ${error.getMessage()}"
+            return[success:false, mensaje: error.getMessage()]
+        }
+    }
 
     def lista(){
         try{
@@ -52,37 +74,78 @@ def ClacificacionService
                 estatus: producto.estatus, //7
                 // fechaIngreso: producto.fechaIngreso, //
                 stock: producto.stock, //
-                distribuidor: producto.distribuidor
+                distribuidor: producto.distribuidor,
+                // categorias: categoria.id
+                descuento: producto.descuento
             ])}
             return[success: true, lista:lista]
         }catch(error){
-            println "${new Date()} | Area Service | Lista | Error | ${error.getMessage()}"
+            println "${new Date()} | Producto Service | Lista | Error | ${error.getMessage()}"
             return [ success: false, mensaje: error.getMessage()]
         }
     }
 
-    def gestionar(){}
+    def gestionar(){
+
+    }
 
     private info_producto = {_producto->
-    def categorias = []
-    _producto.categorias.each { _categoria ->
+    // def categorias = []
+    // _producto.categorias.each { _categoria ->
         
-        // println(Categoria.get(_categoria.id).properties)
-        // println(Categoria.get(_categoria.id).nombre)
-        // println(Categoria.get(_categoria.id).id)
-        // println(Categoria.get(_categoria.id).producto)
+    //     // println(Categoria.get(_categoria.id).properties)
+    //     // println(Categoria.get(_categoria.id).nombre)
+    //     // println(Categoria.get(_categoria.id).id)
+    //     categorias.add([            
+    //         categorias.add(ProductoCategoria.get(_categoria.id))
+    //     ])}
+    // _producto.categorias.each{_categoria->
+    //         categorias.add([
+    //             uuid = _categoria.uuid,
+    //             nombre = _categoria.nombre
+    //         ])}
 
-        categorias.add([            
-            categorias.add(Categoria.get(_categoria.id))
+    // println "-------------------------------------"
+    // println _producto.categorias
+    // println _producto.precio
+    // println _producto.descuento
+
+    def oferta = (_producto.precio *_producto.descuento)/100
+    def descuento
+    def expira
+    if(_producto.descuento){
+        descuento = _producto.precio - oferta
+        // expira = _producto.expDescuento
+    }else{
+        descuento = 0
+    }
+
+    def listaCategorias = []
+    _producto.categorias.each { pc ->
+        // println "...Me regresa el id de la relacion entre produto y categoria..."
+        // println pc
+        // println "...Me regresa los datos de la categoria..."
+        // println pc.categorias
+        // println "...Me regresa el nombre de la categoria..."
+        // println pc.categorias.nombre
+
+        listaCategorias.add([
+            uuid: pc.categorias.uuid,
+            nombre: pc.categorias.nombre //pc- nueva lista, categorias-la propiedad de la tabla relacional ProductoCategoria, nombre la propiedad específica
         ])
     }
 
+    def productoModelo = []
+    // println _producto.modelo.nombre
+
     return _producto ? [
         uuid: _producto.uuid,
-        nombre: "${_producto.nombre} ${_producto.modelo}",
-        categorias: categorias,
-        precio: _producto.precio,
-        descripcion: _producto.descripcion
+        nombre: "${_producto.nombre} ${_producto.modelo.nombre}",
+        categorias: listaCategorias,
+        precioOri: _producto.precio,
+        precioDesc: descuento,
+        descripcion: _producto.descripcion,
+        Promocion: _producto.descuento
     ] : []
     }
 }

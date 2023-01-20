@@ -20,6 +20,6 @@ class Distribuidor {
     }
 
     static mapping = {
-        version: false
+        version false
     }
 }

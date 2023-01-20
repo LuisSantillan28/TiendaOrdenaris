@@ -4,6 +4,7 @@ import grails.gorm.transactions.Transactional
 import org.tienda.Color
 import org.tienda.Tipo
 import org.tienda.Categoria
+import org.tienda.Producto
 
 @Transactional
 class ClacificacionService {
@@ -67,11 +68,7 @@ class ClacificacionService {
         }
         }
     }
-
-    def info_categoria(){
-        
-    }
-
+    
     def gestionarCategoria(data, uuid = null){
         Categoria.withTransaction{tStatus->
         def nCategoria

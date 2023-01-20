@@ -8,6 +8,7 @@ class UrlMappings {
             group "/producto", {
                 "/paginar"(controller: "producto", action: "paginar", method: "GET")
                 "/listar"(controller: "producto", action: "lista", method: "GET")
+                "/carousel"(controller: "producto", action: "carousel", method: "GET")
                 "/registrar"(controller: "producto", action: "gestionar", method: "POST")
             }
             group "/colores",{
@@ -24,7 +25,8 @@ class UrlMappings {
             }
             group "/distribuidor",{
                 "/registrar"(controller: "distribuidor", action:"gestionar", method:"POST")
-                "/listar"(controller: "distribuidor", action:"lista", method:"GET")
+                "/listar"(controller: "distribuidor", action:"listar", method:"GET")
+                "/informacion"(controller: "distribuidor", action:"informacion", method:"GET")
             }
             group "/marca",{
                 "/registrar"(controller: "marca", action:"gestionar", method:"POST")
@@ -34,6 +36,6 @@ class UrlMappings {
 
         "/"(controller: 'application', action:'index')
         "500"(view: '/error')
-        "404"(view: '/notFound from mapping')
+        "404"(view: '/notFound')
     }
 }
