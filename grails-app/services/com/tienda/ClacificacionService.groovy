@@ -47,11 +47,12 @@ class ClacificacionService {
     }
 
     def listaTipo(){}
+
     def gestionarTipo( data, uuid = null){
         Tipo.withTransaction{tStatus->
         def nTipo
         try{
-            nTipo //= nTipo.findByUuid( uuid ) //Resolver el porque me lo está haciendo nulo
+            nTipo = Tipo.findByUuid( uuid ) //Resolver el porque me lo está haciendo nulo
 
             if(!nTipo){
                 nTipo = new Tipo()
@@ -72,18 +73,25 @@ class ClacificacionService {
     def gestionarCategoria(data, uuid = null){
         Categoria.withTransaction{tStatus->
         def nCategoria
+        def subcategoria
        try{ 
-        // nCategoria = nCategoria.findByUuid(uuid)
+        nCategoria = Categoria.findByUuid(uuid)
+        subcategoria = Categoria.findByUuid(data.categoriaPadre)
+
         if(!nCategoria){
             nCategoria = new Categoria()
         }        
 
         nCategoria.nombre = data.nombre
-        nCategoria.categoriaPadre = data.categoriaPadre
+        if(!subcategoria){
+            "No existe la categoria"
+        }else{
+            nCategoria.categoriaPadre = subcategoria
+        }
         nCategoria.save(flush: true, failOnError: true)
         return[success: true]}catch(error){
             println "${new Date()} | Clacificacion Service | Gestionar Categoria | Error | ${error.getMessage()}"
-            return[success: false, mensaje: error.getMessage]
+            return[success: false, mensaje: error.getMessage()]
         }}
     }
 }

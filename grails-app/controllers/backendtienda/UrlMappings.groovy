@@ -8,7 +8,8 @@ class UrlMappings {
             group "/producto", {
                 "/paginar"(controller: "producto", action: "paginar", method: "GET")
                 "/listar"(controller: "producto", action: "lista", method: "GET")
-                "/carousel"(controller: "producto", action: "carousel", method: "GET")
+                "/listaFiltrada"(controller: "producto", action: "listaFiltrada", method: "GET")
+                "/$uuid/listaFiltradaDistribuidor"(controller: "producto", action: "listaFiltradaDistribuidor", method: "GET")
                 "/registrar"(controller: "producto", action: "gestionar", method: "POST")
             }
             group "/colores",{
@@ -26,7 +27,7 @@ class UrlMappings {
             group "/distribuidor",{
                 "/registrar"(controller: "distribuidor", action:"gestionar", method:"POST")
                 "/listar"(controller: "distribuidor", action:"listar", method:"GET")
-                "/informacion"(controller: "distribuidor", action:"informacion", method:"GET")
+                "/$uuid/informacion"(controller: "distribuidor", action:"informacion", method:"GET")
             }
             group "/marca",{
                 "/registrar"(controller: "marca", action:"gestionar", method:"POST")

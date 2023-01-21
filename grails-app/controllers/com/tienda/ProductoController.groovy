@@ -57,15 +57,26 @@ class ProductoController {
     def lista(){
         render(ProductoService.lista() as JSON)
     }
-    def carousel(){
-        render(ProductoService.carousel() as JSON)
+    def listaFiltrada(){
+        render(ProductoService.listaFiltrada() as JSON)
     }
 
-    // def gestionar(data){
-    //     def data.request.JSON
-    //     if(!data.nombre){
+    def listaFiltradaDistribuidor(){
+        if(params.max){
+            try{
+                if(params.max.toInteger()<1){
+                    render([success: false, mensaje: FuncionesService.getMensajeInvalido("max")] as JSON)
+                    return
+                }
+            }catch(error){
+                render([success: false, mensaje: FuncionesService.getMensajeInvalido("max")] as JSON)} 
+                return
+            }
+        render(ProductoService.listaFiltradaDistribuidor(params) as JSON)
+    }
 
-    //     }
-    //     render(ProductoService.gestionar(data,params.uuid) as JSON)
-    // }
+    def gestionar(){
+        def data = request.JSON
+        render(ProductoService.gestionar(data,params.uuid) as JSON)
+    }
 }

@@ -21,11 +21,12 @@ class Producto {
     BigDecimal precio
     int garantia
     int descuento
-    int expDescuento
+    Date expDescuento
     String descripcion //Características generales del producto
     int estatus = 1//1-en stock, 2-proximamente, 3-eliminado
     Date fechaIngreso = new Date()
     int stock = 0
+    String image
 
     static constraints = {
         uuid unique: true

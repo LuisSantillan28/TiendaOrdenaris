@@ -71,7 +71,7 @@ class ClacificacionController {
         render(ClacificacionService.gestionarCategoria(data, params.uuid) as JSON)
     }
     def listaCategoria(){
-        render(ClacificacionService.info_categoria() as JSON)
+        render(ClacificacionService.info_categoria(params.uuid) as JSON)
     }
 }
 
