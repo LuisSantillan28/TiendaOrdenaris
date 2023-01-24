@@ -7,6 +7,9 @@ import org.tienda.Marca
 import org.tienda.Color
 import org.tienda.Categoria
 import org.tienda.Tipo
+import org.tienda.ProductoCategoria
+import org.tienda.ColorProducto
+import org.tienda.ProductoTipo
 
 import grails.gorm.transactions.Transactional
 
@@ -126,19 +129,18 @@ class ProductoService {
                 nProducto = Producto.findAllByUuid(uuid)
                 nModelo = Modelo.findAll()
 
-                if(!data){
+                if(!nProducto){
                     nProducto = new Producto()
                 }
 
-                def colores = Color.findAllByUuidList(data.colores)
+                def colores = Color.findAllByUuidInList(data.colores)
                 if(!colores) return [success: false, mensaje: "Color no encontrado"]
 
-                def categorias = Categoria.findAllByUuidList(data.categorias)
+                def categorias = Categoria.findAllByUuidInList(data.categorias)
                 if(!categorias) return[success: false, mensaje: "Categoría no encontrado"]
 
-                def tipos = Tipo.findAllByUuidList(data.tipos)
+                def tipos = Tipo.findAllByUuidInList(data.tipos)
                 if(!tipos) return[success: false, mensaje: "Tipo no encontrado"]
-
                 nModelo = new Modelo()
                 //Registro del modelo
                 nModelo.nombre = data.nombreModelo
@@ -152,47 +154,96 @@ class ProductoService {
                 nProducto.precio = data.precio
                 nProducto.garantia = data.garantia
                 nProducto.descuento = data.descuento
+                println data.expDescuento
+                data.expDescuento? nProducto.expDescuento = data.expDescuento : ''
                 nProducto.descripcion = data.descripcion
                 nProducto.stock = data.stock
                 nProducto.image = data.image
 
-                nProducto.modelo = Modelo.findAllByUuid(nModelo.uuid)
-                nProducto.marca = Marca.findAllByUuid(data.marca)
-                nProducto.distribuidor = Distribuidor.findAllByUuid(data.distribuidor)
+                nProducto.modelo = Modelo.findByUuid(nModelo.uuid)
+                nProducto.marca = Marca.findByUuid(data.marca)
+                nProducto.distribuidor = Distribuidor.findByUuid(data.distribuidor)
 
-                def listaColores = []
-                nProducto.colores.each{_color->
-                    listaColores.add(Color.get(_color.id))
-                }
+                // def listaCategorias = []
+                // nProducto.categorias.each{_categoria->
+                //     listaCategorias.add(Categoria.get(_categoria.id))
 
-                colores.each{obj->
-                    nProducto.addToColores(obj)
-                }
+                // }
+                // nProducto.categorias = []
 
-                def listaCategorias =[]
-                nProducto.categorias.each{_categoria->
-                    listaCategorias.add(Categoria.get(_categoria.id))
-                }
+                // def nProdCate = new ProductoCategoria()
 
-                categorias.each{obj->
-                    nProducto.addToCategorias(obj)
-                }
 
-                def listaTipos = []
-                nProducto.tipo.each{_tipo->
-                    listaTipos.add(Tipo.get(_tipo.id))
-                }
+                // categorias.each{obj->
+                // println "-----------"
+                // println categorias
+                // println obj
+                // println "-----------"
+                //     nProdCate.categorias.addToCategorias(obj)
+                //     nProdCate.save(flush: true, failOnError: true)
+                // }
+                
+                // def listaColores = []
+                // nProducto.colores.each{_color->
+                //     listaColores.add(Color.get(_color.id))
+                // }
 
-                tipo.each{obj->
-                    nProducto.addToTipo(obj)
-                }
+                // nProducto.colores = []
+                // nProducto.colores.each{obj->
+                //     nProducto.addToColores(obj)
+                // }
+
+                // def listaTipos = []
+                // nProducto.tipo.each{_tipo->
+                //     listaTipos.add(Tipo.get(_tipo.id))
+                // }
+                
+                // nProducto.tipo = []
+
+                // nProducto.tipo.each{obj->
+                //     nProducto.addToTipo(obj)
+                // }
                 
                 nProducto.save(flush: true, failOnError: true)
 
+                data.categorias.each{_categoria->
+                    def categoriaObj = Categoria.findByUuid(_categoria)
+                    if( !categoriaObj ) return 
+                    new ProductoCategoria([
+                        categorias: Categoria.findByUuid(_categoria),
+                        productos: nProducto
+                    ]).save(flush:true, failOnError:true)
+                }
+
+                data.colores.each{_color->
+                    def colorObj = Color.findByUuid(_color)
+                    if(!colorObj) return
+                    new ColorProducto([
+                        colores: colorObj,
+                        productos: nProducto
+                    ]).save(flush: true, failOnError: true)
+                }
+
+                data.tipos.each{_tipo->
+                def tipoObj = Tipo.findByUuid(_tipo)
+                if(!tipoObj) return
+                new ProductoTipo([
+                    tipos: tipoObj,
+                    productos: nProducto
+                ]).save(flush: true, failOnError: true)
+                }
+
+
                 return[success: true]
             }catch(error){
-                println "${new Date()} | Producto Service | Gestonar doesn't works! | ERROR | ${error.getMessage()}"
+                println "${new Date()} | Producto Service | Gestionar doesn't works! | ERROR | ${error.getMessage()}"
                 tStatus.setRollbackOnly()
+
+                error.stackTrace.each { newErr ->
+                    if(newErr.className.startsWith("com.tienda.ProductoService")){
+                        println newErr
+                    }
+                }
                 return [success: false, mensaje: error.getMessage()]
             }
         }
@@ -245,6 +296,7 @@ class ProductoService {
             nombre: pc.categorias.nombre //pc- nueva lista, categorias-la propiedad de la tabla relacional ProductoCategoria, nombre la propiedad específica
         ])
     }
+    Random cantidadAleatoria = new Random()
 
     // def productoModelo = []
     // println _producto.modelo.nombre
@@ -257,7 +309,8 @@ class ProductoService {
         precioDescuento: descuento,
         descripcion: _producto.descripcion,
         porcentajeDescuento: _producto.descuento,
-        fechaLimPromocion: _producto.expDescuento
+        fechaLimPromocion: _producto.expDescuento,
+        cantidad: cantidadAleatoria.nextInt(3)
     ] : [:]
     }
     }
