@@ -45,6 +45,7 @@ grails.plugin.springsecurity.filterChain.chainMap = [
     [pattern:'**/tienda/ordenaris/api/colores/listar', filters:'anonymousAuthenticationFilter,restTokenValidationFilter,restExceptionTranslationFilter,filterInvocationInterceptor'],
  
  	[pattern:'**/tienda/ordenaris/api/producto/registrar', filters:"JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-authenticationFilter"],
+ 	[pattern:'**/tienda/ordenaris/api/producto/$uuid/actualizar', filters:"JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-authenticationFilter"],
  	[pattern:'**/tienda/ordenaris/api/colores/registrar', filters:"JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-authenticationFilter"],
  	[pattern:'**/tienda/ordenaris/api/tipo/registrar', filters:"JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-authenticationFilter"],
  	[pattern:'**/tienda/ordenaris/api/categoria/registrar', filters:"JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter,-authenticationFilter"],

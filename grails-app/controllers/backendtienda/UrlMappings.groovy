@@ -11,6 +11,7 @@ class UrlMappings {
                 "/listaFiltrada"(controller: "producto", action: "listaFiltrada", method: "GET")
                 "/$uuid/listaFiltradaDistribuidor"(controller: "producto", action: "listaFiltradaDistribuidor", method: "GET")
                 "/registrar"(controller: "producto", action: "gestionar", method: "POST")
+                "$uuid/actualizar"(controller: "producto", action: "gestionar", method: "PUT")
             }
             group "/colores",{
                 "/registrar"(controller: "clacificacion", action:"gestionarColor", method: "POST")

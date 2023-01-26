@@ -11,13 +11,20 @@ class DistribuidorService {
     def listar() {
         try{
             def lista=[]
+            def total= 0
+            def totales
             Distribuidor.findAll().each{distribuidor->
+            // println informacion(distribuidor.uuid).informacionP.productoTotal
+            totales = informacion(distribuidor.uuid).informacionP.productoTotal
+            if(totales > 0){
             lista.add([
                 uuid: distribuidor.uuid,
                 nombre: distribuidor.nombre
             ])
+                total+=1
             }
-            return[success: true, lista:lista]
+            }
+            return[success: true, lista:lista, total: total]
         }catch(error){
             println "${new Date()} | Distribuidor Service | Listar doesn't works | Error | ${error.getMessage()} "
             return[success: false, mensaje: error.getMessage()]
@@ -39,17 +46,20 @@ class DistribuidorService {
             // println iDistribuidor.productos
             // println "--------------------------------"
             def listaProducto = []
+            def cont = 0
 
             iDistribuidor.productos.each{_producto->
                 // println _producto    
                 def srvP = ProductoService.info_producto(_producto)
                 listaProducto.add(srvP)
+                cont+= 1 
             }
 
             def informacionP =[
                 uuid: iDistribuidor.uuid,
                 nombre: iDistribuidor.nombre,
-                productos: listaProducto
+                productos: listaProducto,
+                productoTotal: cont
             ]
             return [success: true, informacionP:informacionP]
         }catch(error){

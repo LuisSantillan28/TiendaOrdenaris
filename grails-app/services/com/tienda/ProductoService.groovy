@@ -154,7 +154,7 @@ class ProductoService {
                 nProducto.precio = data.precio
                 nProducto.garantia = data.garantia
                 nProducto.descuento = data.descuento
-                println data.expDescuento
+                // println data.expDescuento
                 data.expDescuento? nProducto.expDescuento = data.expDescuento : ''
                 nProducto.descripcion = data.descripcion
                 nProducto.stock = data.stock
@@ -310,7 +310,7 @@ class ProductoService {
         descripcion: _producto.descripcion,
         porcentajeDescuento: _producto.descuento,
         fechaLimPromocion: _producto.expDescuento,
-        cantidad: cantidadAleatoria.nextInt(3)
+        cantidad: cantidadAleatoria.nextInt(100)
     ] : [:]
     }
     }

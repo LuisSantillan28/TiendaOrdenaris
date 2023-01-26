@@ -77,17 +77,9 @@ class ProductoController {
 
     def gestionar(){
         def data = request.JSON
-        println "----------------------------------------"
-        println data.expDescuento
-        println "----------------------------------------"
-
          try {
             if( data.expDescuento ) {
-                println new Date(data.expDescuento)
-        println "----------------------------------------"
                 data.expDescuento = new Date(data.expDescuento)
-        println data.expDescuento
-        println "----------------------------------------"
             }
         }catch(e) {
             render( [success:false, mensaje: FuncionesService.getMensajeInvalido("expDescuento")] as JSON )
